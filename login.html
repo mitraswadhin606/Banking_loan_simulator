@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Banking Loan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body class="login-page">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="login-layout">
+      <div class="login-visual">
+        <div class="login-brand">
+          <div class="brand-mark large">B</div>
+          <h2>Banking Loan</h2>
+        </div>
+
+        <div class="hero-panel">
+          <p class="eyebrow">Smart lending</p>
+          <h1>Secure financing for every next step.</h1>
+          <p>Monitor applications, assess borrower risk, and approve loans with confidence using a streamlined banking workflow.</p>
+
+          <div class="metrics">
+            <div class="metric-box">
+              <strong>12.5%</strong>
+              <span>Portfolio growth</span>
+            </div>
+            <div class="metric-box">
+              <strong>74%</strong>
+              <span>Approval rate</span>
+            </div>
+            <div class="metric-box">
+              <strong>₹4.8Cr</strong>
+              <span>Disbursed this quarter</span>
+            </div>
+            <div class="metric-box">
+              <strong>128</strong>
+              <span>Applications tracked</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-form-panel">
+        <div class="login-form-card">
+          <p class="eyebrow">Welcome back</p>
+          <h3>Sign in</h3>
+          <p class="login-subtext">Access the credit risk dashboard and application workflow.</p>
+
+          <form method="post" action="{{ url_for('login') }}" class="login-form">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" name="username" placeholder="Enter username" required />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="Enter password" required />
+            </div>
+
+            <button type="submit" class="primary-btn login-btn">Login</button>
+          </form>
+
+          <div class="hint-box">
+            <strong>Demo credentials:</strong><br />
+            Username: admin<br />
+            Password: admin123
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

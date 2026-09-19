@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Assessment Result | Banking Loan{% endblock %}
+
+{% block content %}
+<div class="result-card">
+  <h2>Loan Risk Assessment Result</h2>
+  <div class="result-summary {{ risk.lower().replace(' ', '-') }}">
+    <span class="label">Risk Category:</span>
+    <strong>{{ risk }}</strong>
+  </div>
+
+  <div class="customer-summary">
+    <h3>Customer Details</h3>
+    <ul>
+      <li><strong>Name:</strong> {{ customer.name }}</li>
+      <li><strong>Age:</strong> {{ customer.age }}</li>
+      <li><strong>Monthly Income:</strong> {{ customer.monthly_income }}</li>
+      <li><strong>Employment:</strong> {{ customer.employment_type }}</li>
+      <li><strong>Loan Amount:</strong> {{ customer.loan_amount }}</li>
+      <li><strong>Purpose:</strong> {{ customer.loan_purpose }}</li>
+      <li><strong>Credit Score:</strong> {{ customer.credit_score }}</li>
+    </ul>
+  </div>
+
+  <div class="reasons-box">
+    <h3>Assessment Reasons</h3>
+    <ul>
+      {% for reason in reasons %}
+      <li>{{ reason }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="action-row">
+    <a href="{{ url_for('dashboard') }}" class="secondary-btn">Back to form</a>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+  </div>
+</div>
+{% endblock %}

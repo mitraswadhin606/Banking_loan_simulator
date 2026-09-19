@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found | Banking Loan{% endblock %}
+
+{% block content %}
+<div class="notfound-wrap">
+  <div class="notfound-box">
+    <p class="eyebrow">404 error</p>
+    <h1>Page not found</h1>
+    <p>The page you are looking for does not exist or has been moved.</p>
+    <a href="{{ url_for('dashboard') }}" class="primary-btn">Back to dashboard</a>
+  </div>
+</div>
+{% endblock %}

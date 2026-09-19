@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assessment | Banking Loan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-box">
+          <div class="brand-mark">B</div>
+          <div>
+            <h3>Banking Loan</h3>
+            <p>Risk Desk</p>
+          </div>
+        </div>
+
+        <nav class="side-nav">
+          <a href="{{ url_for('dashboard') }}">Overview</a>
+          <a href="{{ url_for('loan_application') }}">New Application</a>
+          <a href="{{ url_for('applications') }}">Applications</a>
+          <a class="active" href="{{ url_for('assessment_view') }}">Assessment</a>
+          <a href="{{ url_for('profile') }}">Profile</a>
+          <a href="{{ url_for('settings') }}">Settings</a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <header class="main-header">
+          <div>
+            <p class="eyebrow">Loan review</p>
+            <h1>Applicant assessment</h1>
+          </div>
+          <div class="header-user">
+            <span>{{ username }}</span>
+          </div>
+        </header>
+
+        {% if customer %}
+          <section class="page-card summary-card">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Applicant overview</p>
+                <h2>{{ customer.name }}</h2>
+              </div>
+              <span class="status-badge status-{{ risk.lower().replace(' ', '-') }}">{{ risk }}</span>
+            </div>
+
+            <div class="assessment-grid">
+              <div class="info-block">
+                <h3>Application summary</h3>
+                <ul>
+                  <li><span>Age</span><strong>{{ customer.age }}</strong></li>
+                  <li><span>Monthly income</span><strong>₹{{ customer.monthly_income }}</strong></li>
+                  <li><span>Employment</span><strong>{{ customer.employment_type }}</strong></li>
+                  <li><span>Loan amount</span><strong>₹{{ customer.loan_amount }}</strong></li>
+                  <li><span>Purpose</span><strong>{{ customer.loan_purpose }}</strong></li>
+                  <li><span>Credit score</span><strong>{{ customer.credit_score }}</strong></li>
+                </ul>
+              </div>
+
+              <div class="info-block">
+                <h3>Assessment factors</h3>
+                <ul class="factor-list">
+                  {% for reason in reasons %}
+                  <li>{{ reason }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </section>
+        {% else %}
+          <section class="page-card empty-state">
+            <div class="empty-state-box">
+              <h2>No applicant selected</h2>
+              <p>Submit a new loan application to generate an assessment result.</p>
+              <a href="{{ url_for('loan_application') }}" class="primary-btn">Create application</a>
+            </div>
+          </section>
+        {% endif %}
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

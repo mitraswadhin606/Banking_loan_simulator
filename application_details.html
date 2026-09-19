@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Application Details | Banking Loan{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand-box">
+      <div class="brand-mark">B</div>
+      <div>
+        <h3>Banking Loan</h3>
+        <p>Risk Desk</p>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="{{ url_for('dashboard') }}">Overview</a>
+      <a href="{{ url_for('loan_application') }}">New Application</a>
+      <a class="active" href="{{ url_for('applications') }}">Applications</a>
+      <a href="{{ url_for('assessment_view') }}">Assessment</a>
+      <a href="{{ url_for('profile') }}">Profile</a>
+      <a href="{{ url_for('settings') }}">Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+    </div>
+  </aside>
+
+  <main class="main-panel">
+    <header class="main-header">
+      <div>
+        <p class="eyebrow">Application record</p>
+        <h1>{{ customer.name }}</h1>
+      </div>
+      <div class="header-user">
+        <span>{{ username }}</span>
+      </div>
+    </header>
+
+    <section class="page-card detail-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Status</p>
+          <h2>{{ customer.status }}</h2>
+        </div>
+        <span class="status-badge status-{{ customer.risk.lower().replace(' ', '-') }}">{{ customer.risk }}</span>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-column">
+          <h3>Applicant profile</h3>
+          <ul>
+            <li><span>Application ID</span><strong>{{ customer.id }}</strong></li>
+            <li><span>Email</span><strong>{{ customer.email }}</strong></li>
+            <li><span>Phone</span><strong>{{ customer.phone }}</strong></li>
+            <li><span>Age</span><strong>{{ customer.age }}</strong></li>
+            <li><span>Monthly income</span><strong>{{ customer.income }}</strong></li>
+            <li><span>Employment</span><strong>{{ customer.employment }}</strong></li>
+          </ul>
+        </div>
+
+        <div class="detail-column">
+          <h3>Loan details</h3>
+          <ul>
+            <li><span>Loan amount</span><strong>{{ customer.loan_amount }}</strong></li>
+            <li><span>Purpose</span><strong>{{ customer.purpose }}</strong></li>
+            <li><span>Credit score</span><strong>{{ customer.credit_score }}</strong></li>
+            <li><span>Risk score</span><strong>{{ customer.score }}</strong></li>
+            <li><span>Approval status</span><strong>{{ customer.status }}</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      {% if customer.status == "In Review" %}
+      <div class="form-actions">
+        <form method="post" action="{{ url_for('update_application_status', application_id=customer.id, status='Approved') }}">
+          <button type="submit" class="primary-btn">Approve application</button>
+        </form>
+        <form method="post" action="{{ url_for('update_application_status', application_id=customer.id, status='Rejected') }}">
+          <button type="submit" class="secondary-btn">Reject application</button>
+        </form>
+      </div>
+      {% endif %}
+    </section>
+  </main>
+</div>
+{% endblock %}

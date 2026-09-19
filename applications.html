@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Applications | Banking Loan{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand-box">
+      <div class="brand-mark">B</div>
+      <div>
+        <h3>Banking Loan</h3>
+        <p>Risk Desk</p>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="{{ url_for('dashboard') }}">Overview</a>
+      <a href="{{ url_for('loan_application') }}">New Application</a>
+      <a class="active" href="{{ url_for('applications') }}">Applications</a>
+      <a href="{{ url_for('assessment_view') }}">Assessment</a>
+      <a href="{{ url_for('profile') }}">Profile</a>
+      <a href="{{ url_for('settings') }}">Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+    </div>
+  </aside>
+
+  <main class="main-panel">
+    <header class="main-header">
+      <div>
+        <p class="eyebrow">Portfolio</p>
+        <h1>Loan applications</h1>
+      </div>
+      <div class="header-user">
+        <span>{{ username }}</span>
+      </div>
+    </header>
+
+    <section class="page-card table-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Search and filter</p>
+          <h2>Application records</h2>
+        </div>
+        <a href="{{ url_for('loan_application') }}" class="primary-btn small-btn">Add new</a>
+      </div>
+
+      <div class="filters-row">
+        <input type="text" placeholder="Search by applicant or ID" />
+        <select>
+          <option>All statuses</option>
+          <option>Approved</option>
+          <option>In Review</option>
+          <option>Pending</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Application ID</th>
+              <th>Applicant</th>
+              <th>Amount</th>
+              <th>Purpose</th>
+              <th>Risk Score</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for app in applications %}
+            <tr>
+              <td><a href="{{ url_for('application_details', application_id=app.id) }}">{{ app.id }}</a></td>
+              <td>{{ app.name }}</td>
+              <td>{{ app.loan_amount }}</td>
+              <td>{{ app.purpose }}</td>
+              <td>{{ app.score }}</td>
+              <td><span class="status-pill {{ app.status.lower().replace(' ', '-') }}">{{ app.status }}</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}

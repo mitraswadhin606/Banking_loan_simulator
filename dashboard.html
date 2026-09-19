@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Banking Loan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-box">
+          <div class="brand-mark">B</div>
+          <div>
+            <h3>Banking Loan</h3>
+            <p>Risk Desk</p>
+          </div>
+        </div>
+
+        <nav class="side-nav">
+          <a class="active" href="{{ url_for('dashboard') }}">Overview</a>
+          <a href="{{ url_for('loan_application') }}">New Application</a>
+          <a href="{{ url_for('applications') }}">Applications</a>
+          <a href="{{ url_for('assessment_view') }}">Assessment</a>
+          <a href="{{ url_for('profile') }}">Profile</a>
+          <a href="{{ url_for('settings') }}">Settings</a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <header class="main-header">
+          <div>
+            <p class="eyebrow">Portfolio overview</p>
+            <h1>Welcome back, {{ username }}</h1>
+          </div>
+          <div class="header-user">
+            <span>{{ username }}</span>
+          </div>
+        </header>
+
+        <section class="stats-grid">
+          <div class="stat-card">
+            <div class="label">Total applications</div>
+            <div class="value">{{ stats.applications }}</div>
+            <div class="meta positive">+12.5% vs last month</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Approved</div>
+            <div class="value">{{ stats.approved }}</div>
+            <div class="meta positive">74% approval rate</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Pending review</div>
+            <div class="value">{{ stats.pending }}</div>
+            <div class="meta neutral">Needs attention</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Disbursed</div>
+            <div class="value">{{ stats.disbursed }}</div>
+            <div class="meta positive">This quarter</div>
+          </div>
+        </section>
+
+        <section class="page-card overview-card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Quick actions</p>
+              <h2>Loan operations</h2>
+            </div>
+            <a href="{{ url_for('loan_application') }}" class="primary-btn small-btn">New application</a>
+          </div>
+
+          <div class="quick-actions">
+            <div class="action-box">
+              <span class="box-icon">→</span>
+              <div>
+                <h3>Review loans</h3>
+                <p>Check active risk assessments and application queue.</p>
+              </div>
+            </div>
+            <div class="action-box">
+              <span class="box-icon">✓</span>
+              <div>
+                <h3>Approve files</h3>
+                <p>Track approvals, rejections and document review status.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-card table-card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Recent activity</p>
+              <h2>Recent applications</h2>
+            </div>
+            <a href="{{ url_for('applications') }}" class="secondary-btn small-btn">View all</a>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Applicant</th>
+                  <th>Loan</th>
+                  <th>Purpose</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for app in recent_applications %}
+                <tr>
+                  <td>{{ app.name }}</td>
+                  <td>{{ app.amount }}</td>
+                  <td>{{ app.purpose }}</td>
+                  <td><span class="status-pill {{ app.status.lower().replace(' ', '-') }}">{{ app.status }}</span></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

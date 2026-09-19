@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile | Banking Loan{% endblock %}
+
+{% block content %}
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand-box">
+      <div class="brand-mark">B</div>
+      <div>
+        <h3>Banking Loan</h3>
+        <p>Risk Desk</p>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="{{ url_for('dashboard') }}">Overview</a>
+      <a href="{{ url_for('loan_application') }}">New Application</a>
+      <a href="{{ url_for('applications') }}">Applications</a>
+      <a href="{{ url_for('assessment_view') }}">Assessment</a>
+      <a class="active" href="{{ url_for('profile') }}">Profile</a>
+      <a href="{{ url_for('settings') }}">Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+    </div>
+  </aside>
+
+  <main class="main-panel">
+    <header class="main-header">
+      <div>
+        <p class="eyebrow">Account</p>
+        <h1>User profile</h1>
+      </div>
+      <div class="header-user">
+        <span>{{ username }}</span>
+      </div>
+    </header>
+
+    <section class="page-card profile-card">
+      <div class="profile-top">
+        <div class="avatar">{{ username[0].upper() }}</div>
+        <div>
+          <h2>{{ username }}</h2>
+          <p>Senior Credit Analyst</p>
+        </div>
+      </div>
+
+      <div class="profile-grid">
+        <div class="field-group">
+          <label>Full name</label>
+          <input type="text" value="{{ username.title() }} User" />
+        </div>
+        <div class="field-group">
+          <label>Email</label>
+          <input type="email" value="{{ username }}@bankingloan.com" />
+        </div>
+        <div class="field-group">
+          <label>Department</label>
+          <input type="text" value="Risk Management" />
+        </div>
+        <div class="field-group">
+          <label>Office</label>
+          <input type="text" value="Head Office, Delhi" />
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}
